@@ -1,0 +1,2 @@
+https://maids.zohorecruit.com/forms/9990e3410b31e604d3a5a4e22fd69d81736c0c4f61944a1ce101d0cca0c171d6\
+https://github.com/ranimshi/Devices-Price-Classification-System-using-Python-and-Spring-Boot/blob/main/python_project/train.py
