@@ -3,7 +3,7 @@ import sqlite3
 import joblib
 
 app = Flask(__name__)
-db_path = 'devices.db'
+db_path = 'springboot.db'
 
 model = joblib.load('model.joblib')
 
