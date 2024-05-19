@@ -17,9 +17,17 @@ data = pd.read_excel('../data/train.xlsx')
 X = data.drop('price_range', axis=1)
 y = data['price_range']
 
-# Determine the columns with missing values -
 # Replace them with the "median" value rather than the "mean" to avoid outliers
-
+# Scan for missing values and replace them
+for column in data.columns:
+    if data[column].dtype == 'object':
+        # Calculate the mode and replace missing values
+        mode_value = data[column].mode()[0]
+        data[column].fillna(mode_value, inplace=True)
+    else:  # Numerical columns
+        # Calculate the median and replace missing values
+        median_value = data[column].median()
+        data[column].fillna(median_value, inplace=True)
 
 # Split the data into training and validation sets
 X_train, X_val, y_train, y_val = train_test_split(
