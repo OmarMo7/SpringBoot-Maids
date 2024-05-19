@@ -5,26 +5,48 @@ import joblib
 app = Flask(__name__)
 db_path = 'springboot.db'
 
+# Load the pre-trained machine learning model
 model = joblib.load('model.joblib')
 
 
 def get_db():
+    """
+    Establishes a connection to the SQLite database.
+
+    Returns:
+        sqlite3.Connection: A connection to the database.
+    """
     conn = sqlite3.connect(db_path)
     return conn
 
 
 @app.route('/devices', methods=['GET'])
 def get_all_devices():
+    """
+    Retrieves all devices from the database.
+
+    Returns:
+        str: A message containing the list of all devices.
+    """
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM devices')
     devices = cursor.fetchall()
     conn.close()
-    return f"This is all devices{devices}"
+    return f"This is all devices: {devices}"
 
 
 @app.route('/devices/<int:device_id>', methods=['GET'])
 def get_device_by_id(device_id):
+    """
+    Retrieves a specific device by its ID.
+
+    Args:
+        device_id (int): The ID of the device to retrieve.
+
+    Returns:
+        dict: A JSON representation of the device information.
+    """
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM devices WHERE id = ?', (device_id,))
@@ -35,6 +57,12 @@ def get_device_by_id(device_id):
 
 @app.route('/devices', methods=['POST'])
 def add_new_device():
+    """
+    Adds a new device to the database.
+
+    Returns:
+        dict: A JSON response indicating success or error.
+    """
     try:
         data = request.get_json()  # Get input data from the request
         conn = get_db()
@@ -50,6 +78,12 @@ def add_new_device():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Predicts the price range for a new device based on input features.
+
+    Returns:
+        str: A message indicating the predicted price range.
+    """
     try:
         data = request.get_json()  # Get input data from the request
         prediction = model.predict([list(data.values())])
