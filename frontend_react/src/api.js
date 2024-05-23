@@ -9,6 +9,7 @@ const api = axios.create({
 
 export const predictDevicePrice = async (deviceData) => {
   try {
+    console.log(deviceData)
     const response = await api.post('/predict', deviceData);
     return response.data; // Assuming your server returns the predicted price range
   } catch (error) {

@@ -85,6 +85,7 @@ def predict():
         str: A message indicating the predicted price range.
     """
     try:
+        print(request)
         data = request.get_json()  # Get input data from the request
         prediction = model.predict([list(data.values())])
 
